@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>かけざんゲーム</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <main class="app" aria-label="かけざんチャレンジ">
+      <section class="play-area">
+        <header class="status-bar" aria-label="ゲームの状態">
+          <div class="timer">
+            <span class="label">のこり</span>
+            <span id="timeLeft" class="timer-value">30.0</span>
+            <span class="label">びょう</span>
+          </div>
+          <div class="score" aria-live="polite">
+            <span id="correctCount" class="score-value">0</span>
+            <span id="scoreTotal" class="score-total">/10</span>
+          </div>
+        </header>
+
+        <div class="question-wrap" aria-live="polite">
+          <div id="question" class="question"></div>
+          <div id="feedback" class="feedback" role="status"></div>
+        </div>
+
+        <div id="bomb" class="bomb" aria-hidden="true">
+          <div class="bomb-body">
+            <div class="bomb-shine"></div>
+            <div class="bomb-shine small"></div>
+          </div>
+          <div class="bomb-neck"></div>
+          <div class="fuse"></div>
+          <div class="spark"></div>
+        </div>
+      </section>
+
+      <aside class="keypad-area" aria-label="数字入力">
+        <div class="answer-panel">
+          <div class="answer-label">こたえ</div>
+          <div id="answerDisplay" class="answer-display" aria-live="polite">_</div>
+        </div>
+
+        <div class="keypad">
+          <button class="key" type="button" data-number="1">1</button>
+          <button class="key" type="button" data-number="2">2</button>
+          <button class="key" type="button" data-number="3">3</button>
+          <button class="key" type="button" data-number="4">4</button>
+          <button class="key" type="button" data-number="5">5</button>
+          <button class="key" type="button" data-number="6">6</button>
+          <button class="key" type="button" data-number="7">7</button>
+          <button class="key" type="button" data-number="8">8</button>
+          <button class="key" type="button" data-number="9">9</button>
+          <button class="key key-secondary" type="button" id="clearButton">けす</button>
+          <button class="key" type="button" data-number="0">0</button>
+          <button class="key key-enter" type="button" id="enterButton">ENTER</button>
+        </div>
+      </aside>
+
+      <div id="resultOverlay" class="result-overlay" hidden>
+        <div class="result-box">
+          <p id="resultTitle" class="result-title"></p>
+          <p id="resultMessage" class="result-message"></p>
+          <div class="result-actions">
+            <button id="retryButton" class="retry-button" type="button">もういちど</button>
+            <button id="menuButton" class="menu-button" type="button">せってい</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="countdownOverlay" class="countdown-overlay">
+        <div id="countdownNumber" class="countdown-number">3</div>
+      </div>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
