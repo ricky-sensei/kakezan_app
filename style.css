@@ -251,8 +251,8 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: calc(var(--px) * 36);
-  padding: calc(var(--px) * 60) calc(var(--px) * 80);
+  gap: calc(var(--px) * 28);
+  padding: calc(var(--px) * 40) calc(var(--px) * 80);
 }
 
 .answer-panel {
@@ -285,9 +285,9 @@ button {
 
 .keypad {
   display: grid;
-  grid-template-columns: repeat(3, calc(var(--px) * 150));
-  grid-auto-rows: calc(var(--px) * 150);
-  gap: calc(var(--px) * 30) calc(var(--px) * 40);
+  grid-template-columns: repeat(3, calc(var(--px) * 140));
+  grid-auto-rows: calc(var(--px) * 140);
+  gap: calc(var(--px) * 24) calc(var(--px) * 40);
 }
 
 .key {
