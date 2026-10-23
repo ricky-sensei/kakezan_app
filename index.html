@@ -3,14 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>かけざん爆弾しょうりはん</title>
+    <title>かけざん爆弾しょりはん</title>
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
     <main class="config-app" aria-label="ゲーム設定">
       <header class="config-title"> 
-        <div class="title-small">ばくだん</div>
-        <h1>かけざん <span>爆弾</span> しょりはん!</h1>
+        <h1>かけざん <ruby>爆弾<rt class="title-small">ばくだん</rt></ruby> しょりはん!<small class="version">ver 1.1</small></h1>
       </header>
 
       <div class="config-content">
@@ -52,12 +51,40 @@
             </select>
           </label>
 
-          <button class="start-button" type="submit">START</button>
+          <div class="start-row">
+            <button class="start-button" type="submit">START</button>
+            <button id="soundButton" class="sound-button" type="button" aria-label="おと" aria-pressed="true">♪</button>
+            <input id="soundInput" type="hidden" name="sound" value="on">
+          </div>
         </form>
       </div>
     </main>
 
     <script>
+      const SOUND_STORAGE_KEY = "kakezan-app-sound-v1";
+      const soundButton = document.querySelector("#soundButton");
+      const soundInput = document.querySelector("#soundInput");
+
+      function setSound(isOn) {
+        soundButton.setAttribute("aria-pressed", String(isOn));
+        soundInput.value = isOn ? "on" : "off";
+        try {
+          window.localStorage.setItem(SOUND_STORAGE_KEY, soundInput.value);
+        } catch {
+          // 保存できない環境でも、この画面での切り替えは使える。
+        }
+      }
+
+      let savedSound = "on";
+      try {
+        savedSound = window.localStorage.getItem(SOUND_STORAGE_KEY) || "on";
+      } catch {}
+      setSound(savedSound !== "off");
+
+      soundButton.addEventListener("click", () => {
+        setSound(soundInput.value !== "on");
+      });
+
       document.querySelector("#configForm").addEventListener("submit", (event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);

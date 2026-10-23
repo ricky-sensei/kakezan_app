@@ -3,11 +3,12 @@
   const MAX_INPUT_LENGTH = 2;
 
   const AUDIO_FILES = {
-    correct: "",
-    wrong: "",
-    clear: "",
-    gameOver: "",
+    correct: "./sounds/correct.mp3",
+    wrong: "./sounds/wrong.mp3",
+    clear: "./sounds/clear.mp3",
+    gameOver: "./sounds/gameOver.mp3",
   };
+  const BGM_FILE = "./sounds/clock.mp3";
 
   const timeLeftEl = document.querySelector("#timeLeft");
   const correctCountEl = document.querySelector("#correctCount");
@@ -32,6 +33,9 @@
     Object.entries(AUDIO_FILES).map(([name, src]) => [name, src ? new Audio(src) : null]),
   );
 
+  const bgm = new Audio(BGM_FILE);
+  bgm.loop = true;
+
   const problems = createProblems(settings.dan);
 
   function readSettings() {
@@ -45,6 +49,7 @@
       seconds: Number.isFinite(seconds) && seconds > 0 ? seconds : 30,
       target: Number.isInteger(target) && target > 0 ? target : 10,
       dan: dan === "all" || (Number.isInteger(dan) && dan >= 1 && dan <= 9) ? dan : "all",
+      sound: params.get("sound") !== "off",
     };
   }
 
@@ -96,10 +101,30 @@
 
   function playSound(name) {
     const audio = audioSlots[name];
-    if (!audio) return;
+    if (!settings.sound || !audio) return;
 
     audio.currentTime = 0;
     audio.play().catch(() => {});
+  }
+
+  function startBgm() {
+    if (!settings.sound) return;
+    bgm.currentTime = 0;
+    bgm.play().catch(() => {
+      // 自動再生が止められたときは、最初のタップで鳴らし始める。
+      document.addEventListener(
+        "pointerdown",
+        () => {
+          if (isRunning) bgm.play().catch(() => {});
+        },
+        { once: true },
+      );
+    });
+  }
+
+  function stopBgm() {
+    bgm.pause();
+    bgm.currentTime = 0;
   }
 
   function getProblemWeight(problem) {
@@ -244,6 +269,7 @@
 
     isRunning = false;
     window.cancelAnimationFrame(timerId);
+    stopBgm();
     bombEl.classList.remove("warning");
 
     if (isClear) {
@@ -296,6 +322,7 @@
         startTime = performance.now();
         isRunning = true;
         timerId = window.requestAnimationFrame(updateTimer);
+        startBgm();
         return;
       }
 
