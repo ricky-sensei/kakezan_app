@@ -545,6 +545,137 @@ button {
   color: var(--success);
 }
 
+/* ===== 横向きタブレット（4:3〜16:10） ===== */
+
+/*
+ * 電子黒板 (16:9) より縦に長い横向きの画面では 1440x1080 を基準にし、
+ * 高さいっぱいに表示する。
+ */
+@media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 16/10) {
+  :root {
+    --px: min(calc(100vw / 1440), calc(var(--vh) / 1080));
+  }
+
+  .app {
+    grid-template-columns: minmax(0, 1fr) calc(var(--px) * 600);
+  }
+
+  .play-area {
+    padding: calc(var(--px) * 48) calc(var(--px) * 40);
+  }
+
+  .status-bar {
+    gap: calc(var(--px) * 24);
+  }
+
+  .timer {
+    gap: calc(var(--px) * 14);
+  }
+
+  .label,
+  .score-total {
+    font-size: calc(var(--px) * 46);
+  }
+
+  .timer-value,
+  .score-value {
+    font-size: calc(var(--px) * 110);
+  }
+
+  .question-wrap {
+    left: calc(var(--px) * 24);
+    right: calc(var(--px) * 24);
+  }
+
+  .question {
+    gap: calc(var(--px) * 20);
+    font-size: calc(var(--px) * 120);
+  }
+
+  .blank,
+  .term {
+    min-width: calc(var(--px) * 170);
+    height: calc(var(--px) * 170);
+  }
+
+  .keypad-area {
+    padding: calc(var(--px) * 40) calc(var(--px) * 50);
+  }
+
+  .answer-panel {
+    width: calc(var(--px) * 500);
+  }
+
+  .config-app {
+    padding: calc(var(--px) * 48) calc(var(--px) * 60);
+  }
+
+  .config-title h1 {
+    font-size: calc(var(--px) * 96);
+  }
+
+  .config-content {
+    grid-template-columns: minmax(0, 1fr) calc(var(--px) * 760);
+    gap: calc(var(--px) * 40);
+  }
+
+  .config-explosion {
+    width: calc(var(--px) * 460);
+  }
+}
+
+/* ===== 縦向き（タブレット） ===== */
+
+/*
+ * 縦長の画面では 1080x1920 のデザインを基準にし、
+ * 問題を上、テンキーを下に並べる。
+ */
+@media (max-aspect-ratio: 1/1) {
+  :root {
+    --px: min(calc(100vw / 1080), calc(var(--vh) / 1920));
+  }
+
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .keypad-area {
+    padding-bottom: calc(var(--px) * 80);
+  }
+
+  .config-content {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-content: center;
+    justify-items: center;
+    gap: calc(var(--px) * 60);
+  }
+
+  .config-app {
+    padding-left: calc(var(--px) * 40);
+    padding-right: calc(var(--px) * 40);
+  }
+
+  .config-title h1 {
+    font-size: calc(var(--px) * 84);
+    white-space: nowrap;
+  }
+
+  .version {
+    display: block;
+    margin: calc(var(--px) * 12) 0 0;
+  }
+
+  .config-explosion {
+    width: calc(var(--px) * 480);
+  }
+
+  .config-panel {
+    width: calc(var(--px) * 820);
+  }
+}
+
 /* ===== アニメーション ===== */
 
 @keyframes shake {
